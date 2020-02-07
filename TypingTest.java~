@@ -1,0 +1,80 @@
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.KeyStroke;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
+
+public class TypingTest {
+  public static char nextChar;
+  public static int currentCounter = 0;
+  public static String typed="";
+  public static JLabel response;
+  public static String paragraph;
+  public static void main(String[] argv) throws Exception {
+    JTextField component = new JTextField();
+    JPanel main = new JPanel();
+    component.addKeyListener(new MyKeyListener());
+component.getInputMap().put(KeyStroke.getKeyStroke("BACK_SPACE"), "none");
+response = new JLabel("This is highligted text that has to be noted down with care" );
+paragraph=response.getText();
+nextChar = paragraph.charAt(currentCounter);
+component.setPreferredSize(new Dimension(300,200));
+    JFrame f = new JFrame();
+    main.add(response);
+    main.add(component);
+   f.setContentPane(main);
+    f.setSize(300, 300);
+    f.setVisible(true);
+
+  }
+  public static void advance(boolean correct)
+  {
+    if(correct==true)
+    {
+      response.setText("<html>"+typed+"<span bgcolor=\"yellow\">"+nextChar+"</span>"+"<span>"+ paragraph.substring(currentCounter+1,paragraph.length()-1)+"</span>"+"</html>");
+      String key = "<span bgcolor=\"yellow\">"+nextChar+"</span>";
+      typed=typed+key;
+     // String full = "<html>"+typed+"<span>"+ typed.substring(currentCounter+1,typed.length()-1)+"</span>"+"</html>";
+      currentCounter++;
+      nextChar=paragraph.charAt(currentCounter);
+     // setLabel(full);
+    }
+    else
+    {
+        response.setText("<html>"+typed+"<span bgcolor=\"red\">"+nextChar+"</span>"+"<span>"+ paragraph.substring(currentCounter+1,paragraph.length()-1)+"</span>"+"</html>");
+      String key = "<span bgcolor=\"red\">"+nextChar+"</span>";
+      typed=typed+key;
+     // String full = "<html>"+typed+"<span>"+ typed.substring(currentCounter+1,typed.length()-1)+"</span>"+"</html>";
+      currentCounter++;
+      nextChar=paragraph.charAt(currentCounter);
+     // setLabel(full);
+    }
+  }
+  public static void setLabel(String text)
+  {
+   response.setText(text);
+   nextChar=text.charAt(currentCounter);
+  }
+}
+
+class MyKeyListener extends KeyAdapter {
+  public char key;
+  public void keyPressed(KeyEvent evt) {
+   if (evt.getKeyChar() == TypingTest.nextChar && (Character.isLetter(evt.getKeyChar())||evt.getKeyChar()==' ')) {
+    key=evt.getKeyChar();
+      System.out.println("Check for key characters: " + evt.getKeyChar());
+      TypingTest.advance(true);
+    }
+   else if(Character.isLetter(evt.getKeyChar())||evt.getKeyChar()==' ')
+   {
+      key=evt.getKeyChar();
+      System.out.println("Check for key characters: " + evt.getKeyChar());
+      TypingTest.advance(false);
+   }
+//    if (evt.getKeyCode() == KeyEvent.VK_HOME) {
+//      System.out.println("Check for key codes: " + evt.getKeyCode());
+//    }
+  }
+}
