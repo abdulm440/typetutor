@@ -1,0 +1,135 @@
+/* LevelSelectView
+ * Created by: Johnson Duong
+ * Updated on: 2019/05/22
+ * The view for the level selection
+ */
+
+import javax.swing.*;
+import java.awt.*;
+
+public class LevelSelectView 
+{
+ //instance variables
+ private JFrame window;
+ private FrameModel frameModel;
+ private JPanel contentPane = new JPanel();
+ private JPanel textPanel = new JPanel();
+ private JPanel levelsPanel = new JPanel();
+ private JLabel instruction = new JLabel("Choose a level");
+ private CustomButton level1 = new CustomButton("1",160,160,95);
+ private CustomButton level2 = new CustomButton("2",160,160,95);
+ private CustomButton level3 = new CustomButton("3",160,160,95);
+ private CustomButton level4 = new CustomButton("4",160,160,95);
+ private CustomButton level5 = new CustomButton("5",160,160,95);
+ private CustomButton level6 = new CustomButton("6",160,160,95);
+ private CustomButton level7 = new CustomButton("7",160,160,95);
+ private CustomButton level8 = new CustomButton("8",160,160,95);
+ private CustomButton level9 = new CustomButton("9",160,160,95);
+ private CustomButton level10 = new CustomButton("10",160,160,95);
+ private CustomButton backButton = new CustomButton("Back",112, 60, 30);
+ private GridBagConstraints gbc = new GridBagConstraints();
+
+ //constructor
+ public LevelSelectView(FrameModel model, JFrame mainWindow) 
+ {
+  this.window = mainWindow;
+  this.frameModel = model;
+  this.layoutView();
+  this.registerControllers();
+
+ }//end constructor
+
+ private void layoutView()
+ {
+  //the instructions
+  textPanel.setLayout(new GridBagLayout());
+  textPanel.setPreferredSize(new Dimension(1366,245));
+  textPanel.setBackground(new Color(56, 183, 255));
+  this.instruction.setFont(UIMethods.deriveFont("leaguespartan-bold.ttf", 55));
+  this.gbc.insets = new Insets(0,1085,10,0);
+  this.gbc.gridx = 0;
+  this.gbc.gridy = 0;
+
+  //the level buttons
+  SpringLayout layout = new SpringLayout();
+  layout.putConstraint(SpringLayout.WEST, this.level2, 100, SpringLayout.EAST, this.level1); //creates spacing between buttons
+  layout.putConstraint(SpringLayout.WEST, this.level3, 100, SpringLayout.EAST, this.level2);
+  layout.putConstraint(SpringLayout.WEST, this.level4, 100, SpringLayout.EAST, this.level3);
+  layout.putConstraint(SpringLayout.WEST, this.level5, 100, SpringLayout.EAST, this.level4);
+  layout.putConstraint(SpringLayout.NORTH, this.level6, 100, SpringLayout.SOUTH, this.level1);
+  layout.putConstraint(SpringLayout.WEST, this.level7, 100, SpringLayout.EAST, this.level6);
+  layout.putConstraint(SpringLayout.NORTH, this.level7, 100, SpringLayout.SOUTH, this.level2);
+  layout.putConstraint(SpringLayout.WEST, this.level8, 100, SpringLayout.EAST, this.level7);
+  layout.putConstraint(SpringLayout.NORTH, this.level8, 100, SpringLayout.SOUTH, this.level3);
+  layout.putConstraint(SpringLayout.WEST, this.level9, 100, SpringLayout.EAST, this.level8);
+  layout.putConstraint(SpringLayout.NORTH, this.level9, 100, SpringLayout.SOUTH, this.level4);
+  layout.putConstraint(SpringLayout.WEST, this.level10, 100, SpringLayout.EAST, this.level9);
+  layout.putConstraint(SpringLayout.NORTH, this.level10, 100, SpringLayout.SOUTH, this.level5);
+
+  levelsPanel.setLayout(layout);
+  levelsPanel.setPreferredSize(new Dimension(1200,500));
+  levelsPanel.setBackground(new Color(56, 183, 255));
+  
+  //the window
+  textPanel.add(instruction);
+  textPanel.add(backButton,gbc);
+  levelsPanel.add(level1);
+  levelsPanel.add(level2);
+  levelsPanel.add(level3);
+  levelsPanel.add(level4);
+  levelsPanel.add(level5);
+  levelsPanel.add(level6);
+  levelsPanel.add(level7);
+  levelsPanel.add(level8);
+  levelsPanel.add(level9);
+  levelsPanel.add(level10);
+
+  contentPane.add(textPanel);
+  contentPane.add(levelsPanel);
+  contentPane.setBackground(new Color(56, 183, 255));
+
+  window.setTitle("Learning Mode");
+  window.setContentPane(contentPane);
+  window.setSize(1366, 768);
+  window.setVisible(true);
+
+ }//end layoutView
+
+ private void registerControllers()
+ {
+  FrameSwitchController lvlOneController = new FrameSwitchController(level1,frameModel,"Intro1");
+  level1.addMouseListener(lvlOneController);
+
+  FrameSwitchController lvlTwoController = new FrameSwitchController(level2,frameModel,"Intro2");
+  level2.addMouseListener(lvlTwoController);
+
+  FrameSwitchController lvlThreeController = new FrameSwitchController(level3,frameModel,"Intro3");
+  level3.addMouseListener(lvlThreeController);
+
+  FrameSwitchController lvlFourController = new FrameSwitchController(level4,frameModel,"Intro4");
+  level4.addMouseListener(lvlFourController);
+
+  FrameSwitchController lvlFiveController = new FrameSwitchController(level5,frameModel,"Intro5");
+  level5.addMouseListener(lvlFiveController);
+
+  FrameSwitchController lvlSixController = new FrameSwitchController(level6,frameModel,"Intro6");
+  level6.addMouseListener(lvlSixController);
+
+  FrameSwitchController lvlSevenController = new FrameSwitchController(level7,frameModel,"Intro7");
+  level7.addMouseListener(lvlSevenController);
+
+  FrameSwitchController lvlEightController = new FrameSwitchController(level8,frameModel,"Intro8");
+  level8.addMouseListener(lvlEightController);
+
+  FrameSwitchController lvlNineController = new FrameSwitchController(level9,frameModel,"Intro9");
+  level9.addMouseListener(lvlNineController);
+
+  FrameSwitchController lvlTenController = new FrameSwitchController(level10,frameModel,"Intro10");
+  level10.addMouseListener(lvlTenController);
+  
+  FrameSwitchController backController = new FrameSwitchController(backButton,frameModel,"Menu");
+  backButton.addMouseListener(backController);
+
+ }//end registerControllers
+ 
+}//ssalc

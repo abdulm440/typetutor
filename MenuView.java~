@@ -1,0 +1,151 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class MenuView extends JPanel
+{
+  
+  private JFrame frame ;
+  private Student student;
+ // private JPanel mainPanel = new JPanel();
+  private JPanel topPanel = new JPanel();
+  private JPanel middlePanel = new JPanel();
+  private JPanel bottomPanel = new JPanel();
+  private JPanel left = new JPanel();
+  private JPanel right = new JPanel();
+  private JLabel levelsUnlocked = new JLabel();
+  private JLabel typingSpeed = new JLabel();
+  private JLabel accuracy = new JLabel();
+  private JLabel welcome = new JLabel();
+  private  JButton play = new JButton("Play");
+  private JButton practice = new JButton("Practice");
+  private JButton learn = new JButton("Learn");
+  private JButton logOut = new JButton("Log Out");
+  private FrameModel frameModel;
+  public MenuView (JFrame window, FrameModel model,Student user) 
+  {
+    this.frameModel = model;
+    this.frame = window;
+    this.student=user;
+    this.layoutView();
+    this.registerControllers();
+    this.update();
+  }
+  private void layoutView() 
+  {
+    this.setBackground(new Color(56,182,255));
+    topPanel.setBackground(new Color(56,182,255));
+    bottomPanel.setBackground(new Color(56,182,255));
+    middlePanel.setBackground(new Color(56,182,255));
+    left.setBackground(new Color(56,182,255));
+    right.setBackground(new Color(56,182,255));
+    
+    left.setLayout(new BoxLayout(left,BoxLayout.Y_AXIS));
+    right.setLayout(new BoxLayout(right,BoxLayout.Y_AXIS));
+    
+    
+    this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+    this.setLayout(new BorderLayout());
+    this.add(topPanel, BorderLayout.NORTH);
+    this.add(left, BorderLayout.WEST);
+    this.add(right, BorderLayout.EAST);
+    this.add(bottomPanel,BorderLayout.SOUTH);
+    
+    Graph speeds = new Graph(this.student.getTypeSpeedArray(),"Last 5 Typing Speeds in Practice Mode (WPM)");
+    speeds.setPreferredSize(new Dimension(683,400));
+    right.add(speeds);
+    levelsUnlocked.setText("Levels Unlocked : " + this.student.getStagesUnlocked());
+    levelsUnlocked.setFont(UIMethods.deriveFont("Barlow-Light.ttf",40f));
+    
+    typingSpeed.setText("Top Typing Speed : "+this.student.getTopTypeSpeed() + " wpm");
+    typingSpeed.setFont(UIMethods.deriveFont("Barlow-Light.ttf",40f));
+    
+    accuracy.setText("Average Accuracy : " + this.student.getAccuracy() + "%");
+    accuracy.setFont(UIMethods.deriveFont("Barlow-Light.ttf",40f));
+    
+    this.welcome.setText("Welcome, " + this.student.getUserName());
+    welcome.setFont(UIMethods.deriveFont("leaguespartan-bold.ttf",50f));
+    welcome.setForeground(Color.WHITE);
+    
+    welcome.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
+    typingSpeed.setBorder(BorderFactory.createEmptyBorder(10,30,10,0));
+    levelsUnlocked.setBorder(BorderFactory.createEmptyBorder(10,30,10,0));
+    accuracy.setBorder(BorderFactory.createEmptyBorder(10,30,10,0));
+    
+    left.add(levelsUnlocked);
+    left.add(typingSpeed);
+    left.add(accuracy);
+    topPanel.add(welcome);
+    
+    frame.setContentPane(this);
+    frame.setSize(1366,768);
+    
+    left.setPreferredSize(new Dimension(683,400));
+    right.setPreferredSize(new Dimension(683,400));
+    topPanel.setPreferredSize(new Dimension(1366,100));
+    middlePanel.setPreferredSize(new Dimension(1366,400));
+    bottomPanel.setPreferredSize(new Dimension(1366,200)); 
+    
+    
+    play.setPreferredSize(new Dimension(300,100));
+    play.setFont(UIMethods.deriveFont("leaguespartan-bold.ttf",40f));
+    play.setOpaque(true);
+    play.setBackground(new Color(241,248,108));
+    play.setBorderPainted(false);
+    bottomPanel.add(play);
+    
+    play.setFocusPainted(false);
+    play.setBorder(BorderFactory.createEmptyBorder(0,0,0,50));
+    
+    
+    practice.setPreferredSize(new Dimension(300,100));
+    practice.setFont(UIMethods.deriveFont("leaguespartan-bold.ttf",40f));
+    practice.setOpaque(true);
+    practice.setBackground(new Color(241,248,108));
+    practice.setBorderPainted(false);
+    bottomPanel.add(practice);
+    
+    practice.setFocusPainted(false);
+    practice.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+    
+    
+    learn.setPreferredSize(new Dimension(300,100));
+    learn.setFont(UIMethods.deriveFont("leaguespartan-bold.ttf",40f));
+    learn.setOpaque(true);
+    learn.setBackground(new Color(241,248,108));
+    learn.setBorderPainted(false);
+    bottomPanel.add(learn);
+    
+    learn.setFocusPainted(false);
+    learn.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+    
+    
+    logOut.setPreferredSize(new Dimension(300,100));
+    logOut.setFont(UIMethods.deriveFont("leaguespartan-bold.ttf",40f));
+    logOut.setOpaque(true);
+    logOut.setBackground(new Color(241,248,108));
+    logOut.setBorderPainted(false);
+    bottomPanel.add(logOut);
+    
+    logOut.setFocusPainted(false);
+    logOut.setBorder(BorderFactory.createEmptyBorder(0,30,0,10));
+    
+    
+    frame.setVisible(true);
+  }
+  
+  private void registerControllers()
+  {
+    play.addMouseListener(new FrameSwitchController(play, frameModel,"Play"));
+    practice.addMouseListener(new FrameSwitchController(practice, frameModel,"Practice"));
+    learn.addMouseListener(new FrameSwitchController(learn, frameModel,"Learn1"));
+    logOut.addMouseListener(new FrameSwitchController(logOut, frameModel,"Logout"));
+  }
+  private void update()
+  {
+    
+  }
+}
+
+
+
+
